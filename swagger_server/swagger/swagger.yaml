@@ -1,0 +1,95 @@
+openapi: 3.0.0
+info:
+  title: RGB Light API
+  description: API for controlling RGB lights.
+  version: "1.0"
+servers:
+- url: /
+paths:
+  /color:
+    summary: Gets/sets solid color.
+    get:
+      summary: Returns the current set color.
+      operationId: color_get
+      responses:
+        "200":
+          description: Typical response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RGB'
+              example:
+                r: 150
+                g: 220
+                b: 5
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+    post:
+      summary: Sets new color.
+      operationId: color_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RGB'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error with request object.
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /gradient:
+    summary: Gets/sets a gradient.
+    get:
+      summary: Returns the current set gradient.
+      operationId: gradient_get
+      responses:
+        "200":
+          description: Typical response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gradient'
+              example:
+              - r: 150
+                g: 220
+                b: 5
+              - r: 200
+                g: 10
+                b: 90
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+    post:
+      summary: Sets new gradient.
+      operationId: gradient_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gradient'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error with request object.
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    RGB:
+      type: object
+      properties:
+        r:
+          type: integer
+        g:
+          type: integer
+        b:
+          type: integer
+      description: Struct for RGB color.
+      example:
+        r: 0
+        b: 1
+        g: 6
+    Gradient:
+      type: array
+      description: Struct for gradient objects.
+      items:
+        $ref: '#/components/schemas/RGB'
+
