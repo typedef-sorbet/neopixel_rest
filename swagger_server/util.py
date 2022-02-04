@@ -2,8 +2,12 @@ import datetime
 
 import six
 import typing
+import board
+import neopixel
 from swagger_server import type_util
 
+NUM_LIGHTS = 44
+lights = neopixel.NeoPixel(board.D18, NUM_LIGHTS)
 
 def _deserialize(data, klass):
     """Deserializes dict, list, str into an object.
@@ -140,3 +144,5 @@ def _deserialize_dict(data, boxed_type):
     """
     return {k: _deserialize(v, boxed_type)
             for k, v in six.iteritems(data)}
+
+    
