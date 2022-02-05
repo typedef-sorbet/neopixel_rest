@@ -88,6 +88,22 @@ paths:
         "400":
           description: Error with request object.
       x-openapi-router-controller: swagger_server.controllers.default_controller
+  /gradient/split:
+    summary: Sets a \"gradient\" that evenly splits the supplied colors across the strip.
+    post:
+      summary: Sets new split gradient.
+      operationId: gradient_split_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gradient'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error with request object.
+      x-openapi-router-controller: swagger_server.controllers.default_controller
   /power:
     summary: Controls the power of the light strip.
     get:

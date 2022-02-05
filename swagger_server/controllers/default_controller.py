@@ -144,6 +144,28 @@ def gradient_rgb_space_post(body=None):  # noqa: E501
 
     return current_gradient
 
+def gradient_split_post(body=None):
+    global current_gradient
+    
+    if connexion.request.is_json:
+        body = [RGB.from_dict(d) for d in connexion.request.get_json()]  # noqa: E501
+
+    if len(body) > 1:
+        chunk_length = util.NUM_LIGHTS // len(body)
+
+        for section_index, rgb in enumerate(body): 
+            for light_index in range(chunk_length):
+                pixel_index = (section_index * chunk_length) + light_index
+                print(f"{pixel_index}: {str((rgb.r, rgb.g, rgb.b))}")
+                util.lights[pixel_index] = (rgb.r, rgb.g, rgb.b)
+
+        util.lights[-1] = (body[-1].r, body[-1].g, body[-1].b)
+
+        current_gradient = body
+        current_color = None
+
+    return current_gradient
+
 def power_get():
     """Returns the current set power.
 
