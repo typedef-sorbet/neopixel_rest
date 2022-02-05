@@ -38,7 +38,6 @@ paths:
           description: Error with request object.
       x-openapi-router-controller: swagger_server.controllers.default_controller
   /gradient:
-    summary: Gets/sets a gradient.
     get:
       summary: Returns the current set gradient.
       operationId: gradient_get
@@ -57,14 +56,55 @@ paths:
                 g: 10
                 b: 90
       x-openapi-router-controller: swagger_server.controllers.default_controller
+  /gradient/hsv_space:
+    summary: Sets a gradient relative to the HSV color space.
     post:
       summary: Sets new gradient.
-      operationId: gradient_post
+      operationId: gradient_hsv_space_post
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Gradient'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error with request object.
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /gradient/rgb_space:
+    summary: Sets a gradient relative to the RGB color space.
+    post:
+      summary: Sets new gradient.
+      operationId: gradient_rgb_space_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gradient'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error with request object.
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /power:
+    summary: Controls the power of the light strip.
+    get:
+      summary: Returns power status.
+      operationId: power_get
+      responses:
+        "200":
+          description: OK
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+    post:
+      summary: Sets power status.
+      operationId: power_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Power'
       responses:
         "200":
           description: OK
@@ -92,4 +132,10 @@ components:
       description: Struct for gradient objects.
       items:
         $ref: '#/components/schemas/RGB'
+    Power:
+      type: object
+      properties:
+        "on":
+          type: boolean
+      description: Struct for power flag.
 
